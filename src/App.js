@@ -25,9 +25,11 @@ function reducer(todos, action) {
     case ACTIONS.DELETE_TASK:
       return todos.filter((todo) => todo.id !== action.payload.id);
     case ACTIONS.GET_TASKS_FROM_STORAGE:
-      console.log("todosReducer", todos);
-      console.log("reducer", action.payload.todos);
-      return [...action.payload.todos];
+      if(action.payload.todos.length !== 0){
+        return [...action.payload.todos];
+      }else {
+        return todos
+      }
     default:
       return todos;
   }
@@ -50,7 +52,6 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todo));
-    console.log("todo", todo);
   }, [todo]);
 
   function handleSubmit(e) {
